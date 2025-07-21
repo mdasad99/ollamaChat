@@ -1,4 +1,4 @@
- Local ChatGPT with Ollama
+# Local ChatGPT with Ollama
 
 ## Features
 
