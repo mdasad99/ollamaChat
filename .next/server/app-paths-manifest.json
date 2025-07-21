@@ -1,0 +1,7 @@
+{
+  "/page": "app/page.js",
+  "/api/chat/route": "app/api/chat/route.js",
+  "/api/chat/[chatId]/route": "app/api/chat/[chatId]/route.js",
+  "/api/chats/route": "app/api/chats/route.js",
+  "/api/chat/[chatId]/message/route": "app/api/chat/[chatId]/message/route.js"
+}
