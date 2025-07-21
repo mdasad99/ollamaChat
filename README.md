@@ -1,4 +1,6 @@
-# Local ChatGPT with Ollama
+# ChatGPT Clone with Ollama
+
+A ChatGPT-like interface built with Next.js that connects to Ollama for local AI chat.
 
 ## Features
 
@@ -57,3 +59,4 @@ Next.js 14 (App Router)
 TypeScript
 Tailwind CSS
 Ollama API
+
