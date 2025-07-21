@@ -1,10 +1,4 @@
-Here’s the updated README with **Node.js** and **PostgreSQL** included, assuming you're using Node for backend integration and PostgreSQL for storing chat history or sessions:
-
----
-
 # Local ChatGPT with Ollama
-
-A ChatGPT-style interface built with **Next.js**, **Node.js**, **PostgreSQL**, and **Ollama** for local AI chat. No external APIs required — everything runs locally.
 
 ## Features
 
@@ -119,7 +113,3 @@ To use a different AI model, edit `app/api/chat/route.ts` and change the `model`
 * **TypeScript** – Type safety
 * **Tailwind CSS** – Styling
 * **Ollama API** – Local AI model runtime
-
----
-
-Let me know if you're using any ORM (like Prisma or TypeORM), so I can include that setup too.
