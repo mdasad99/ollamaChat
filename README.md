@@ -1,195 +1,59 @@
 # Local ChatGPT with Ollama
 
-This is a simple local version of ChatGPT that you can run entirely on your own machine. It uses Next.js for the frontend, Node.js for the backend, PostgreSQL for storing chats, and Ollama to handle the AI responses. The goal is to give you a fast, private chat experience without relying on external APIs.
+## Features
 
-## What it Does
+ChatGPT-style interface with sidebar chat history
+Real-time chat with Ollama models
+Multiple chat sessions
+Responsive design
+No external API keys required
 
-* Chat interface that streams messages like ChatGPT
-* Supports multiple chat sessions with a sidebar to switch between them
-* You can stop the AI response midway if needed
-* Automatically gives your chats a title based on your first message
-* Clean and simple UI
-* Everything is saved locally using PostgreSQL
-* Keyboard shortcuts like:
+## Prerequisites
 
-  * Enter to send
-  * Shift + Enter for a new line
-  * Esc to stop the response
-* Runs a local model (gemma3:1b) through Ollama — no internet needed for AI responses
+1. **Install Ollama**: Download from [ollama.ai](https://ollama.ai)
+2. **Pull the model**: Run ollama pull gemma3:1b in your terminal
 
-## Stack Used
+## Setup
 
-* **Frontend**: Next.js 14, React 18, TypeScript
-* **Backend**: Next.js API routes (Node.js)
-* **Database**: PostgreSQL
-* **AI**: Ollama with the `gemma3:1b` model
-* **Styling**: Tailwind CSS
-* **Real-time Streaming**: Server-sent events (SSE)
-
-## Before You Start
-
-Make sure you have these installed:
-
-* Node.js (v18+)
-* PostgreSQL
-* Ollama (from [ollama.com](https://ollama.com/download))
-
-## Getting Started
-
-### 1. Clone the Repo
-
-```bash
-git clone <your-repo-url>
-cd local-chatgpt-ollama
+1. Install dependencies:
+bash
 npm install
-```
 
-### 2. Run the Setup Script
-
-This will:
-
-* Create a `.env.local` file
-* Check if Ollama is installed
-* Download the gemma3:1b model if it's not already
-
-```bash
-npm run setup
-```
-
-### 3. Add Your Environment Variables
-
-Update `.env.local` with your PostgreSQL connection:
-
-```env
-DATABASE_URL=postgresql://username:password@localhost:5432/chatgpt_local
-OLLAMA_API_URL=http://localhost:11434
-```
-
-### 4. Set Up the Database
-
-```bash
-createdb chatgpt_local
-npm run db:migrate
-```
-
-### 5. Run the App
-
-In one terminal:
-
-```bash
+2. Start Ollama (if not already running):
+bash
 ollama serve
-```
 
-In another terminal:
+3. Make sure the model is available:
+bash
+ollama list
 
-```bash
+4. Start the development server:
+bash
 npm run dev
-```
 
-Then open [http://localhost:3000](http://localhost:3000) and you’re good to go.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-## Folder Overview
+## Usage
 
-```
-app/
-├── api/           → API routes for chats and messages
-├── components/    → React components like chat box, sidebar, etc.
-├── globals.css    → Global styles
-├── layout.tsx     → App layout
-├── page.tsx       → Homepage
+1. Click "New Chat" to start a conversation
+2. Type your message and press Enter or click Send
+3. The AI will respond using the Ollama gemma3:1b model
+4. Chat history is maintained in the sidebar
+5. You can switch between different chat sessions
 
-lib/
-└── db.js          → PostgreSQL connection
+## Troubleshooting
 
-scripts/
-├── setup.js       → Setup helper script
-└── migrate.js     → DB migration logic
-```
+**"Failed to get response"**: Make sure Ollama is running (ollama serve)
+**Model not found**: Install the model with ollama pull gemma3:1b
+**Connection refused**: Check if Ollama is running on port 11434
 
-## Available API Endpoints
+## Customization
 
-| Method | Endpoint                    | What it Does                  |
-| ------ | --------------------------- | ----------------------------- |
-| POST   | /api/chat                   | Create a new chat session     |
-| GET    | /api/chats                  | Get a list of all chats       |
-| GET    | /api/chat/\[chatId]         | Get chat messages             |
-| POST   | /api/chat/\[chatId]/message | Send message and stream reply |
-| POST   | /api/chat/\[chatId]/stop    | Stop the response in progress |
+To use a different model, edit app/api/chat/route.ts and change the model field to your preferred Ollama model.
 
-## Helpful Tips
+## Tech Stack
 
-* Press **Enter** to send a message
-* Use **Shift + Enter** to add a new line
-* Press **Esc** or click **Stop** to cancel a long response
-* Click **New Chat** in the sidebar to start over
-* Click any chat in the sidebar to pick up where you left off
-
-## Database Schema
-
-Here’s what the tables look like:
-
-### chats
-
-```sql
-CREATE TABLE chats (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  title VARCHAR(255) NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-### messages
-
-```sql
-CREATE TABLE messages (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  chat_id UUID REFERENCES chats(id) ON DELETE CASCADE,
-  role VARCHAR(20) NOT NULL CHECK (role IN ('user', 'assistant')),
-  content TEXT NOT NULL,
-  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-## Common Issues
-
-### Ollama not working?
-
-* Make sure `ollama serve` is running
-* Run `ollama list` to see if the model is downloaded
-* Run `ollama pull gemma3:1b` to download it if needed
-
-### Database issues?
-
-* Make sure PostgreSQL is running
-* Check if `chatgpt_local` DB exists using `psql -l`
-* Double-check the `DATABASE_URL` in your `.env.local`
-
-### App issues?
-
-* Run `npm install` again if dependencies are missing
-* Check for errors in your terminal or browser console
-* Make sure `.env.local` is properly set up
-
-## Scripts You Can Use
-
-* `npm run dev` – Start development server
-* `npm run build` – Create a production build
-* `npm run start` – Run the production server
-* `npm run setup` – Run the setup script
-* `npm run db:migrate` – Create the tables
-* `npm run lint` – Check code quality
-
-## Want to Contribute?
-
-Feel free to fork the repo and open a pull request:
-
-1. Fork this repo
-2. Create a new branch for your feature
-3. Make your changes
-4. Test them
-5. Open a PR
-
-## License
-
-This project is intended for learning and development purposes. Make sure to review Ollama’s license and model terms before using it in production.
-
+Next.js 14 (App Router)
+TypeScript
+Tailwind CSS
+Ollama API
