@@ -1,115 +1,76 @@
-# Local ChatGPT with Ollama
+# Ollama Chat Application
+
+ChatGPT-style chat application powered by Ollama.
+
+
+## Requirements
+
+- [Node.js](https://nodejs.org/) (v14 or newer)
+- [Ollama](https://ollama.ai/) installed and running on your computer
+- [PostgreSQL](https://www.postgresql.org/) database
+
+## Quick Start
+
+### 1. Clone this repository
+
+```bash
+git clone [your-repository-url]
+cd [repository-name]
+```
+
+### 2. Set up the database
+
+Make sure PostgreSQL is running, then:
+
+```bash
+cd api
+npm run setup-db
+```
+
+### 3. Start the API server
+
+```bash
+cd api
+npm install
+npm start
+```
+
+The API will run on http://localhost:3001 by default.
+
+### 4. Start the frontend
+
+In a new terminal:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The web interface will be available at http://localhost:3000.
 
 ## Features
 
-* Chat interface similar to ChatGPT
-* Real-time streaming responses
-* Multiple chat sessions with history stored in PostgreSQL
-* Local Ollama model integration (e.g., `gemma3:1b`)
-* Responsive UI
-* Fully local, no OpenAI API needed
+- Chat with any model available in your Ollama installation
+- Save and continue conversations
+- Simple, clean interface similar to ChatGPT
+- Fully local - your data stays on your computer
 
-## Prerequisites
+## Project Structure
 
-1. **Install Node.js**
-   Download from [https://nodejs.org](https://nodejs.org)
+- `/api` - Node.js backend server that communicates with Ollama
+- `/frontend` - Next.js web application
 
-2. **Install PostgreSQL**
-   Download from [https://www.postgresql.org/download/](https://www.postgresql.org/download/)
+## Configuration
 
-3. **Install Ollama**
-   Download from [https://ollama.ai](https://ollama.ai)
+The API server uses environment variables for configuration. Create a `.env` file in the `/api` directory with:
 
-4. **Pull an Ollama model**
-   Run in terminal:
+```
+PORT=3001
+DATABASE_URL=postgresql://username:password@localhost:5432/ollama_chat
+OLLAMA_HOST=http://localhost:11434
+```
 
-   ```bash
-   ollama pull gemma3:1b
-   ```
+## License
 
-## Setup
-
-1. **Clone the repo & install dependencies**
-
-   ```bash
-   git clone <your-repo-url>
-   cd your-project
-   npm install
-   ```
-
-2. **Configure environment variables**
-   Create a `.env` file and add your PostgreSQL connection string:
-
-   ```
-   DATABASE_URL=postgresql://username:password@localhost:5432/your_db_name
-   ```
-
-3. **Start PostgreSQL** (make sure the DB is running and accessible)
-
-4. **Run migrations or initialize the DB** (if using Prisma or another ORM)
-
-   ```bash
-   npx prisma migrate dev
-   ```
-
-5. **Start Ollama**
-
-   ```bash
-   ollama serve
-   ```
-
-6. **Check if model is available**
-
-   ```bash
-   ollama list
-   ```
-
-7. **Start the development server**
-
-   ```bash
-   npm run dev
-   ```
-
-8. **Visit** [http://localhost:3000](http://localhost:3000)
-
-## Usage
-
-* Click **"New Chat"** to start a new session
-* Messages are saved to PostgreSQL
-* Real-time AI replies powered by Ollama
-* Sessions are listed in the sidebar
-
-## Troubleshooting
-
-* **"Failed to get response"**
-  Make sure Ollama is running:
-
-  ```bash
-  ollama serve
-  ```
-
-* **"Model not found"**
-  Pull it manually:
-
-  ```bash
-  ollama pull gemma3:1b
-  ```
-
-* **"Connection refused"**
-  Confirm Ollama is running on port `11434`
-
-* **PostgreSQL errors**
-  Ensure the DB is running and your `.env` is correct
-
-## Customization
-
-To use a different AI model, edit `app/api/chat/route.ts` and change the `model` value (e.g., `llama2`, `mistral`, etc.).
-
-## Tech Stack
-
-* **Node.js** – Server runtime
-* **Next.js 14** – Full-stack framework (App Router)
-* **PostgreSQL** – Database for chat/session storage
-* **TypeScript** – Type safety
-* **Tailwind CSS** – Styling
-* **Ollama API** – Local AI model runtime
+MIT

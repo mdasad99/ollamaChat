@@ -1,0 +1,27 @@
+{
+  "name": "ollama-chat-api",
+  "version": "1.0.0",
+  "description": "Node.js API server for Ollama Chat application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "setup-db": "node scripts/setup-db.js",
+    "test-setup": "node scripts/test-setup.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.6.1",
+    "node-fetch": "^3.3.2",
+    "pg": "^8.11.0",
+    "uuid": "^9.0.0"
+  },
+  "keywords": [
+    "api",
+    "nodejs",
+    "postgresql",
+    "ollama",
+    "chat"
+  ],
+  "author": "",
+  "license": "MIT"
+}
